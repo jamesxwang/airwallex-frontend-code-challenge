@@ -11,7 +11,7 @@ import {
   LargeButton,
   ErrorMsg,
 } from './styled';
-import { requestInvite } from '@/services';
+import requestInvite from '@/services/requestInvite';
 
 interface IRequestModalProps {
   visible: boolean;
@@ -29,9 +29,9 @@ const noop = () => {};
 
 const RequestModal: FC<IRequestModalProps> = (props) => {
   const { visible, handleOk = noop, handleCancel = noop } = props;
-  const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
   const [form] = Form.useForm();
 
   const onFullNameChanged = throttle(
