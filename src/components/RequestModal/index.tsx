@@ -1,8 +1,16 @@
 import { FC, useState } from 'react';
-import { Form, Result, Alert, Checkbox } from 'antd';
+import { Form, Result } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import throttle from 'lodash.throttle';
-import { Modal, ModelTitle, FormArea, FormInput, SendButton, LargeButton, ErrorMsg } from './styled';
+import {
+  Modal,
+  ModelTitle,
+  FormArea,
+  FormInput,
+  SendButton,
+  LargeButton,
+  ErrorMsg,
+} from './styled';
 import { requestInvite } from '@/services';
 
 interface IRequestModalProps {
@@ -26,17 +34,23 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [form] = Form.useForm();
 
-  const onFullNameChanged = throttle((e: React.ChangeEvent<HTMLInputElement>) => {
-    form.setFieldsValue({ fullName: e.target.value });
-  }, 200);
+  const onFullNameChanged = throttle(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      form.setFieldsValue({ fullName: e.target.value });
+    },
+    200,
+  );
 
   const onEmailChanged = throttle((e: React.ChangeEvent<HTMLInputElement>) => {
     form.setFieldsValue({ email: e.target.value });
   }, 200);
 
-  const onConfirmEmailChanged = throttle((e: React.ChangeEvent<HTMLInputElement>) => {
-    form.setFieldsValue({ confirmEmail: e.target.value });
-  }, 200);
+  const onConfirmEmailChanged = throttle(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      form.setFieldsValue({ confirmEmail: e.target.value });
+    },
+    200,
+  );
 
   const onFinish = async (values: IForm) => {
     console.log('Success:', values);
@@ -46,8 +60,8 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
       console.log('response: ', response);
       setSuccess(true);
     } catch (error) {
+      if (error && typeof error === 'string') setErrorMsg(error);
       console.error(error);
-      setErrorMsg((error as Error).message);
     } finally {
       setLoading(false);
     }
@@ -62,13 +76,13 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
     setErrorMsg('');
     setLoading(true);
     form.submit();
-  }
+  };
 
   const onOk = () => {
     form.resetFields();
     setSuccess(false);
     handleOk();
-  }
+  };
 
   const onCancel = () => {
     form.resetFields();
@@ -76,12 +90,14 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
     setSuccess(false);
     setErrorMsg('');
     handleCancel();
-  }
+  };
 
   return (
     <Modal
       centered
-      title={<ModelTitle>{success ? "All done!" : "Request an invite"}</ModelTitle>}
+      title={
+        <ModelTitle>{success ? 'All done!' : 'Request an invite'}</ModelTitle>
+      }
       visible={visible}
       onOk={onOk}
       onCancel={onCancel}
@@ -94,11 +110,7 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
           extra={<LargeButton onClick={onOk}>OK</LargeButton>}
         />
       ) : (
-        <Form
-          form={form}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-        >
+        <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <FormArea>
             <Form.Item
               name="fullName"
@@ -125,9 +137,9 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
                   message: 'Please enter your email!',
                 },
                 {
-                  type: "email",
+                  type: 'email',
                   message: 'Please enter a correct email!',
-                }
+                },
               ]}
             >
               <FormInput
@@ -150,15 +162,23 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
                     if (!value || getFieldValue('email') === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error('The two emails that you entered do not match!'));
+                    return Promise.reject(
+                      new Error(
+                        'The two emails that you entered do not match!',
+                      ),
+                    );
                   },
                 }),
               ]}
             >
-              <FormInput placeholder="Confirm email" onChange={onConfirmEmailChanged} onPressEnter={onClickSendButton} />
+              <FormInput
+                placeholder="Confirm email"
+                onChange={onConfirmEmailChanged}
+                onPressEnter={onClickSendButton}
+              />
             </Form.Item>
             <SendButton loading={loading} onClick={onClickSendButton}>
-              {loading ? "Sending, please wait..." : "Send"}
+              {loading ? 'Sending, please wait...' : 'Send'}
             </SendButton>
             {errorMsg && <ErrorMsg message={errorMsg} />}
           </FormArea>
@@ -166,6 +186,6 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
       )}
     </Modal>
   );
-}
+};
 
 export default RequestModal;
