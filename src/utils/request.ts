@@ -1,34 +1,45 @@
+import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 import { notification } from 'antd';
 
-const showErrorNotification = (title?: string, content?: string) => {
+export const showErrorNotification = ({ title = '', content = '' }) => {
   notification.error({
-    message: title || '',
-    description: content || '',
+    message: title,
+    description: content,
   });
 };
 
-export const request = async (url = '', data = {}) => {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
-  });
+axios.defaults.timeout = 10000; // 10s timeout
 
-  const result = await response.json();
+axios.interceptors.request.use((config) => {
+  config.headers = {
+    'Content-Type': 'application/json',
+  };
+  return config;
+});
 
-  if (!response.ok) {
-    showErrorNotification(response.statusText, result.errorMessage);
-    throw new Error(result.errorMessage);
+axios.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    showErrorNotification({ content: error.message });
+    throw error;
+  },
+);
+
+export const request = async (options: AxiosRequestConfig) => {
+  if (!options || !Object.keys(options).length) {
+    throw Error('You must pass request options to this function!');
   }
-
-  return result; // parses JSON response into native JavaScript objects
-}
+  return new Promise((resolve, reject) =>
+    axios({
+      ...options,
+      method: options.method || 'POST',
+    })
+      .then((res) => resolve(res.data))
+      .catch((e) => {
+        const message = (e as AxiosError).response?.data?.errorMessage;
+        return reject(new Error(message));
+      }),
+  );
+};
