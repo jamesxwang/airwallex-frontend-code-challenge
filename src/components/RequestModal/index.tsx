@@ -57,10 +57,10 @@ const RequestModal: FC<IRequestModalProps> = (props) => {
     const { fullName, email } = values;
     try {
       const response = await requestInvite({ name: fullName, email });
-      console.log('response: ', response);
+      console.log('Response from server: ', response);
       setSuccess(true);
     } catch (error) {
-      if (error && typeof error === 'string') setErrorMsg(error);
+      if (error instanceof Error) setErrorMsg(error.message);
       console.error(error);
     } finally {
       setLoading(false);

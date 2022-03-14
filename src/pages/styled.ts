@@ -1,7 +1,11 @@
-import styled from "styled-components";
-import { Layout, Typography, Button } from "antd";
-import COLORS from "@/constants/colors";
-import { HEADER_HEIGHT, FOOTER_HEIGHT, MELBOURNE_IMAGE } from "@/constants/miscellaneous";
+import styled from 'styled-components';
+import { Layout, Typography, Button } from 'antd';
+import COLORS from '@/constants/colors';
+import {
+  HEADER_HEIGHT,
+  FOOTER_HEIGHT,
+  MELBOURNE_IMAGE,
+} from '@/constants/miscellaneous';
 import {
   UpToLaptop,
   UpToTabletWidth,
@@ -20,10 +24,30 @@ export const ContentLayout = styled(Layout.Content)`
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-image: -moz-linear-gradient(to bottom, ${COLORS.WHITE_FADED}, ${COLORS.BLACK_FADED}), url(${MELBOURNE_IMAGE});
-  background-image: -webkit-linear-gradient(to bottom, ${COLORS.WHITE_FADED}, ${COLORS.BLACK_FADED}), url(${MELBOURNE_IMAGE});
-  background-image: -ms-linear-gradient(to bottom, ${COLORS.WHITE_FADED}, ${COLORS.BLACK_FADED}), url(${MELBOURNE_IMAGE});
-  background-image: linear-gradient(to bottom, ${COLORS.WHITE_FADED}, ${COLORS.BLACK_FADED}), url(${MELBOURNE_IMAGE});
+  background-image: -moz-linear-gradient(
+      to bottom,
+      ${COLORS.WHITE_FADED},
+      ${COLORS.BLACK_FADED}
+    ),
+    url(${MELBOURNE_IMAGE});
+  background-image: -webkit-linear-gradient(
+      to bottom,
+      ${COLORS.WHITE_FADED},
+      ${COLORS.BLACK_FADED}
+    ),
+    url(${MELBOURNE_IMAGE});
+  background-image: -ms-linear-gradient(
+      to bottom,
+      ${COLORS.WHITE_FADED},
+      ${COLORS.BLACK_FADED}
+    ),
+    url(${MELBOURNE_IMAGE});
+  background-image: linear-gradient(
+      to bottom,
+      ${COLORS.WHITE_FADED},
+      ${COLORS.BLACK_FADED}
+    ),
+    url(${MELBOURNE_IMAGE});
   background-attachment: fixed;
   background-position: center center;
   background-repeat: no-repeat;
@@ -88,7 +112,7 @@ export const HeaderSubTitle = styled(Text)`
 `;
 
 export const RequestButton = styled(Button).attrs({
-  // size: 'large'
+  id: 'request-an-invite',
 })`
   margin: 1rem;
   padding: 1rem;

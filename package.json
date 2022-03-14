@@ -2,12 +2,15 @@
   "private": true,
   "scripts": {
     "start": "umi dev",
+    "start:ci": "umi dev",
     "build": "umi build",
+    "build:ci": "umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "e2e:open": "cypress open"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -43,6 +46,7 @@
     "@umijs/test": "^3.5.21",
     "axios-mock-adapter": "^1.20.0",
     "babel-jest": "^27.5.1",
+    "cypress": "^9.5.1",
     "jest": "^27.5.1",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
@@ -56,6 +60,7 @@
     "testEnvironment": "jsdom",
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
-    }
+    },
+    "testPathIgnorePatterns": ["<rootDir>/cypress/"]
   }
 }
