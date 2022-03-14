@@ -1,0 +1,5 @@
+{
+  "projectId": "z52wsa",
+  "integrationFolder": "cypress/integration",
+  "testFiles": "**.spec.js"
+}

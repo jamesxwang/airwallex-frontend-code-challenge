@@ -15,3 +15,17 @@ Start the dev server,
 ```bash
 $ yarn start
 ```
+
+For unit tests, please run:
+
+```bash
+$ yarn test
+```
+
+For e2e tests, please start the dev server first, then run:
+
+```bash
+$ yarn e2e:open
+```
+
+![e2e test](./public/e2e.gif)
