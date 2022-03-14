@@ -28,4 +28,4 @@ For e2e tests, please start the dev server first, then run:
 $ yarn e2e:open
 ```
 
-![e2e test](./public/e2e.gif)
+![e2e test](https://cdn.jsdelivr.net/gh/jamesxwang/cdn@master/202203/e2e.2kdfvkv1l520.gif)
